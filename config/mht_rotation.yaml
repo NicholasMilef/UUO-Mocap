@@ -1,0 +1,3 @@
+name: video_mocap_mht_rotation
+parent: config/video_mocap.yaml
+num_root_orient_angles: 1

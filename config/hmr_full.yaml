@@ -1,0 +1,9 @@
+name: hmr
+parent: config/video_mocap.yaml
+stages:
+  part:
+    use_full_skeleton: 24
+  chamfer:
+    num_iters: 0
+  marker:
+    num_iters: 0

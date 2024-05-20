@@ -1,0 +1,58 @@
+name: video_mocap
+parent:
+stage_repeats: 1
+recompute_marker_labels: False
+find_best_part_fits: True
+num_root_orient_angles: 4
+optimizer:
+  tolerance_grad: 1.e-7
+  tolerance_change: 1.e-9
+stages:
+  reprojection_part:
+    num_iters: 0
+    num_angles: 0
+    losses:
+      reprojection: 1.0
+      chamfer: 1.0
+    criterion: reprojection  # [reprojection, chamfer]
+  part:
+    num_iters: 10000
+    mode: cluster  # [cluster, network]
+    lr: 1.0
+    similarity_threshold: 0.9
+    losses:
+      chamfer: 10.0
+      reg_betas: 0.1
+  segment:
+    rigid_filter: False
+    granularity: full
+  reprojection_full:
+    num_iters: 0
+    num_angles: 0
+  root:
+    num_iters: 0
+    losses:
+      full_chamfer: 10.0
+      reg_betas: 0.1
+    single_directional: True
+    yaw_lock: True
+    constrained_rotation: False
+  chamfer:
+    num_iters: 10000
+    losses:
+      full_chamfer: 10.0
+      reg_pose_body: 1.0
+      reg_betas: 1.0
+    single_directional: True
+    yaw_lock: True
+  compute_locations:
+    use_velocity: False
+    use_barycentric: False
+    use_mean: True
+  marker:
+    num_iters: 10000
+    losses:
+      marker: 1.0
+      reg_pose_body: 0.1
+      reg_betas: 1.0
+    use_sdf: False
